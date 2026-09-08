@@ -1,0 +1,6 @@
+{
+  "name": "OAT Security - Cloud WAF & SOC Platform",
+  "description": "Enterprise Multi-Tenant SaaS Web Application Firewall (WAF) reverse proxy gateway, auto-mitigation 3x strike shield, and real-time SOC dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

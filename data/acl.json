@@ -1,0 +1,10 @@
+{
+  "blacklist": [],
+  "whitelist": [],
+  "strikes": {},
+  "settings": {
+    "strikeThreshold": 3,
+    "strikeWindowMinutes": 60,
+    "defaultWafMode": "BLOCKING"
+  }
+}

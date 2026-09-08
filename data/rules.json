@@ -1,0 +1,122 @@
+{
+  "rules": [
+    {
+      "id": "RULE-SQLI-001",
+      "name": "Classic SQL Injection - Union Based",
+      "category": "SQLi",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)\\b(union\\s+(all\\s+)?select)\\b",
+      "description": "Detects UNION SELECT queries attempting to extract database tables and schema."
+    },
+    {
+      "id": "RULE-SQLI-002",
+      "name": "SQL Injection - Boolean & Tautology Bypass",
+      "category": "SQLi",
+      "severity": "HIGH",
+      "enabled": true,
+      "pattern": "(?i)('\\s*or\\s*['\"\\w]+=['\"\\w]+|\\bor\\s+['\"\\w]+=['\"\\w]+|'\\s*or\\s*true\\b|'\\s*or\\s*1=1|--|/\\*.*?\\*/|#|;\\s*drop\\s+table|;\\s*insert\\s+into|;\\s*update\\s+\\w+)",
+      "description": "Detects tautological statements (' OR '1'='1), SQL comments (-- or #), and stacked queries."
+    },
+    {
+      "id": "RULE-SQLI-003",
+      "name": "SQL Injection - Time-based & Blind Probe",
+      "category": "SQLi",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)\\b(waitfor\\s+delay|benchmark\\s*\\(|pg_sleep\\s*\\(|sleep\\s*\\(\\s*\\d+\\s*\\)|load_file\\s*\\(|into\\s+(outfile|dumpfile))\\b",
+      "description": "Detects blind sleep-based SQL injection and file write/read directives."
+    },
+    {
+      "id": "RULE-SQLI-004",
+      "name": "Automated SQL Scanner User-Agent",
+      "category": "SQLi",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)(sqlmap|havij|pangolin|sqlninja|acunetix|nessus)",
+      "target": "headers",
+      "description": "Detects known automated automated vulnerability scanner user-agents."
+    },
+    {
+      "id": "RULE-XSS-001",
+      "name": "XSS - Explicit Script Tags",
+      "category": "XSS",
+      "severity": "HIGH",
+      "enabled": true,
+      "pattern": "(?i)<\\s*script[^>]*>.*?(<\\s*/\\s*script\\s*>|(?=>))|<\\s*script",
+      "description": "Detects inline or external <script> execution tags in payload."
+    },
+    {
+      "id": "RULE-XSS-002",
+      "name": "XSS - Dangerous HTML Event Handlers",
+      "category": "XSS",
+      "severity": "HIGH",
+      "enabled": true,
+      "pattern": "(?i)\\b(on(error|load|click|mouseover|focus|blur|submit|keydown|mouseenter))\\s*=\\s*['\"`]?[^'\"`>]+",
+      "description": "Detects HTML attributes with inline JS event handlers like onerror= or onload=."
+    },
+    {
+      "id": "RULE-XSS-003",
+      "name": "XSS - Pseudo-protocols & JavaScript Execution",
+      "category": "XSS",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)(javascript\\s*:|vbscript\\s*:|data:text/html|document\\.(cookie|location)|window\\.location|eval\\s*\\(|alert\\s*\\(|prompt\\s*\\(|confirm\\s*\\()",
+      "description": "Detects javascript: pseudo-protocols, document.cookie theft, and DOM execution."
+    },
+    {
+      "id": "RULE-LFI-001",
+      "name": "Path Traversal / Directory Stepping",
+      "category": "LFI",
+      "severity": "HIGH",
+      "enabled": true,
+      "pattern": "(\\.\\.[\\/\\\\]|%2e%2e[%2f%5c]|\\.\\.%2f|\\.\\.%5c)",
+      "description": "Detects parent directory traversal stepping patterns in paths and query params."
+    },
+    {
+      "id": "RULE-LFI-002",
+      "name": "Local File Inclusion - Sensitive System Targets",
+      "category": "LFI",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)(/etc/(passwd|shadow|hosts|group)|/proc/self/environ|c:[\\\\/]windows[\\\\/]win\\.ini|boot\\.ini|php://filter|php://input)",
+      "description": "Detects attempts to access UNIX / Windows system credential files or PHP wrappers."
+    },
+    {
+      "id": "RULE-RCE-001",
+      "name": "Remote Code Execution - Shell Command Chaining",
+      "category": "RCE",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "([;&|`]|\\$\\([^)]+\\)|\\$\\{[^}]+\\})\\s*(whoami|cat\\s+/|uname\\s+-a|id\\b|wget\\s+|curl\\s+|nc\\s+-|bash\\s+-i|powershell|cmd\\.exe)",
+      "description": "Detects chained command execution targeting OS system binaries."
+    },
+    {
+      "id": "RULE-RCE-002",
+      "name": "Remote Code Execution - PHP System Execution Calls",
+      "category": "RCE",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)\\b(system|passthru|exec|shell_exec|proc_open|popen)\\s*\\(",
+      "description": "Detects PHP system execution functions invoked via web input parameters."
+    },
+    {
+      "id": "RULE-CSRF-001",
+      "name": "Cross-Site Request Forgery - Anomalous Origin Check",
+      "category": "CSRF",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "pattern": "(?i)cross-origin-attack-probe|x-csrf-bypass",
+      "description": "Detects forged state-changing requests or test tokens bypassing anti-CSRF."
+    },
+    {
+      "id": "RULE-MALWARE-001",
+      "name": "Web Shell Signatures & Obfuscated Payloads",
+      "category": "Malware",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "pattern": "(?i)(c99shell|r57shell|b374k|wso\\s+shell|alfa\\s+team|eval\\s*\\(\\s*base64_decode\\s*\\(|gzinflate\\s*\\(\\s*base64_decode|assert\\s*\\(\\s*\\$_POST)",
+      "description": "Detects known PHP web shells, backdoors, and base64 eval execution chains."
+    }
+  ]
+}
